@@ -1,0 +1,78 @@
+#
+# This build script is provided by: https://github.com/svparijs/TravisCi.Example
+# Author: Sebastiaan van Parijs
+#
+# For any issues of feedback report it at Github
+#
+# The TYPO3 project - inspiring people to share!
+#
+
+# see http://about.travis-ci.org/docs/user/languages/php/ for more hints
+language: php
+
+# list any PHP version you want to test against
+php:
+
+  # aliased to a recent 5.3.x version
+  - 5.3
+  # aliased to a recent 5.4.x version
+  #- 5.4
+
+# optionally specify a list of environments, for example to test different RDBMS
+env:
+  - DB=mysql
+  #- DB=pgsql
+
+before_install:
+  # If a GUI or Headless browser with Selenium is needed, then check out:
+  # http://about.travis-ci.org/docs/user/gui-and-headless-browsers/
+  #- "export DISPLAY=:99.0"
+  #- "sh -e /etc/init.d/xvfb start"
+  # As well as the Behat docs in TYPO3.TYPO3
+  # Launch the webserver including config:
+  #<VirtualHost *:80>
+  #    DocumentRoot "FLOW_ROOT/Web"
+  #    ServerName neos.behat.test
+  #    SetEnv FLOW_CONTEXT Development/Behat
+  #</VirtualHost>
+  #java -jar selenium-server-standalone-2.x.0.jar
+
+# Setting up pre-requirements
+before_script:
+  - composer self-update --no-interaction
+  - cd ..
+  - git clone git://github.com/typo3-ci/TYPO3-Travis-Integration.git build-environment
+  - source build-environment/install-helper.sh
+  - mkdir Flow && curl -Lk https://gist.github.com/cognifloyd/e31febd08511bcbcce52/raw/42c670c5cf5b5baf133dcbe44954fcfec2ac4de6/composer.json > Flow/composer.json
+  # Symlink the package to the folder that its gonna go
+  # [Replace Package key here]
+  - mkdir -p Flow/Packages/Application && cd Flow/Packages/Application && ln -s ../../../Cognifire.BuilderFoundation && cd ../../
+  # [Replace Package key here]
+
+  - composer install --dev --verbose --no-interaction
+  - if [[ "$DB" == "mysql" ]]; then mysql -u root -e 'create database flow;' && curl -Lk https://gist.github.com/raw/4276117/af19ef22064aae4875f41342845fb89de2f2b72c/Settings.Mysql.yaml > Configuration/Settings.yaml ; fi
+  - if [[ "$DB" == "postgres" ]]; then psql -U postgres -c 'create database flow;' && curl -Lk https://gist.github.com/raw/4276117/40b5254f29e23ff3dcdf36ae72738ad71f9d9048/Settings.Postgresql.yaml > Configuration/Settings.yaml ; fi
+  - mkdir -p Build/PhpUnit && curl -Lk https://gist.github.com/raw/4276117/950465122f99e9c1506495c50332891f2cb89f9d/FunctionalTests.xml > Build/PhpUnit/FunctionalTests.xml
+  - curl -Lk https://gist.github.com/raw/4276117/af763946bd4fc7f0a0462952d71f68288a39c610/UnitTests.xml > Build/PhpUnit/UnitTests.xml
+  - mkdir -p Build/Behat && curl -Lk https://git.typo3.org/TYPO3v5/Distributions/Base.git/blob_plain/da9d6218a68b74db389fc314a9f16e12de52de52:/Build/Behat/composer.json > Build/Behat/composer.json
+  - cd Build/Behat && composer install --verbose && cd ../..
+  - mkdir -p Configuration/Testing/Behat && cp Configuration/Settings.yaml Configuration/Testing/Behat/
+  - mkdir -p Configuration/Development/Behat && cp Configuration/Settings.yaml Configuration/Development/Behat/
+  - cp Packages/Application/Cognifire.BuilderFoundation/Tests/Behavior/behat.yml.dist Packages/Application/Cognifire.BuilderFoundation/Tests/Behavior/behat.yml
+
+script:
+  # Install Prerequirements
+  - bin/phpunit -c Build/BuildEssentials/PhpUnit/UnitTests.xml && bin/phpunit -c Build/BuildEssentials/PhpUnit/FunctionalTests.xml
+  # Code sniffer
+  - bin/phpcs --extensions=php --standard=Packages/Libraries/typo3-qa/typo3flow/ruleset.xml	Packages/Application
+  - if [[ "$DB" == "mysql" ]]; then ./flow doctrine:migrate --quiet && ./flow doctrine:migrate --version 0 --quiet ; fi
+  - echo "Framework Tested."
+  - bin/phpunit -c Build/PhpUnit/UnitTests.xml && bin/phpunit -c Build/PhpUnit/FunctionalTests.xml
+  # [Replace Package key here]
+  - bin/behat -v -c Packages/Application/Cognifire.BuilderFoundation/Tests/Behavior/behat.yml
+  - cd ../Cognifire.BuilderFoundation
+  # [Replace Package key here]
+
+notifications:
+  irc: "irc.freenode.org#cognifloyd"
+
