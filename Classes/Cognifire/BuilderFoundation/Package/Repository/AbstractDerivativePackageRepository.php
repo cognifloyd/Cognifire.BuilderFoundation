@@ -12,17 +12,19 @@ namespace Cognifire\BuilderFoundation\Package\Repository;
  *                                                                        */
 
 use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Persistence\Repository;
-/*I wasn't sure I wanted to use Persistence\Repository, but it has awesome API that I want to reuse.
-  the next question is on what gets used as the persistenceManager. I don't want a DB.
-*/
 
 /**
  * @Flow\Scope("singleton")
  */
-abstract class AbstractPackageRepository extends Repository {
+abstract class AbstractDerivativePackageRepository extends AbstractPackageRepository {
 
-
+	/**
+	 * Overrides automatic detection of the entity class name being managed by the repository.
+	 * Repositories that extend this contain DerivativePackages
+	 *
+	 * @var string
+	 */
+	const ENTITY_CLASSNAME = 'Cognifire\BuilderFoundation\Package\Model\DerivativePackage';
 
 }
 ?>

@@ -16,7 +16,7 @@ use TYPO3\Flow\Annotations as Flow;
 /**
  * @Flow\Scope("singleton")
  */
-class SiteRepository extends AbstractPackageRepository {
+class SiteRepository extends AbstractDerivativePackageRepository {
 
 
 
