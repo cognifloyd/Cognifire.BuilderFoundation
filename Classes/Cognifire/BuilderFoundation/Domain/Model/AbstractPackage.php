@@ -1,5 +1,5 @@
 <?php
-namespace Cognifire\BuilderFoundation\Package\Repository;
+namespace Cognifire\BuilderFoundation\Domain\Model;
 
 /*                                                                        *
  * This script belongs to the TYPO3 Flow package "Cognifire.BuilderFoundation". *
@@ -12,17 +12,52 @@ namespace Cognifire\BuilderFoundation\Package\Repository;
  *                                                                        */
 
 use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Persistence\Repository;
-/*I wasn't sure I wanted to use Persistence\Repository, but it has awesome API that I want to reuse.
-  the next question is on what gets used as the persistenceManager. I don't want a DB.
-*/
 
 /**
- * @Flow\Scope("singleton")
+ * @Flow\Entity
  */
-abstract class AbstractPackageRepository extends Repository {
+abstract class AbstractPackage implements PackageInterface {
+
+	/**
+	 * @var string
+	 */
+	protected $packageKey;
+
+	/**
+	 * @var string
+	 */
+	protected $packagePath;
 
 
+	/**
+	 * @return string
+	 */
+	public function getPackageKey() {
+		return $this->packageKey;
+	}
+
+	/**
+	 * @param string $packageKey
+	 * @return void
+	 */
+	public function setPackageKey($packageKey) {
+		$this->packageKey = $packageKey;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getPackagePath() {
+		return $this->packagePath;
+	}
+
+	/**
+	 * @param string $packagePath
+	 * @return void
+	 */
+	public function setPackagePath($packagePath) {
+		$this->packagePath = $packagePath;
+	}
 
 }
 ?>

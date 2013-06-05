@@ -1,5 +1,5 @@
 <?php
-namespace Cognifire\BuilderFoundation\Package\Repository;
+namespace Cognifire\BuilderFoundation\Domain\Repository;
 
 /*                                                                        *
  * This script belongs to the TYPO3 Flow package "Cognifire.BuilderFoundation". *
@@ -12,11 +12,12 @@ namespace Cognifire\BuilderFoundation\Package\Repository;
  *                                                                        */
 
 use TYPO3\Flow\Annotations as Flow;
+use Cognifire\BuilderFoundation\Persistence\AbstractPackageRepository;
 
 /**
  * @Flow\Scope("singleton")
  */
-class SiteRepository extends AbstractDerivativePackageRepository {
+class BoilerplateRepository extends AbstractPackageRepository {
 
 
 

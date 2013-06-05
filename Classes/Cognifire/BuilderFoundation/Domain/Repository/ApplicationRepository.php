@@ -1,5 +1,5 @@
 <?php
-namespace Cognifire\BuilderFoundation\Package\Repository;
+namespace Cognifire\BuilderFoundation\Domain\Repository;
 
 /*                                                                        *
  * This script belongs to the TYPO3 Flow package "Cognifire.BuilderFoundation". *
@@ -16,15 +16,9 @@ use TYPO3\Flow\Annotations as Flow;
 /**
  * @Flow\Scope("singleton")
  */
-abstract class AbstractDerivativePackageRepository extends AbstractPackageRepository {
+class ApplicationRepository extends AbstractDerivativePackageRepository {
 
-	/**
-	 * Overrides automatic detection of the entity class name being managed by the repository.
-	 * Repositories that extend this contain DerivativePackages
-	 *
-	 * @var string
-	 */
-	const ENTITY_CLASSNAME = 'Cognifire\BuilderFoundation\Package\Model\DerivativePackage';
+
 
 }
 ?>

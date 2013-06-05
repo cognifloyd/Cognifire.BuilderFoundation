@@ -1,5 +1,5 @@
 <?php
-namespace Cognifire\BuilderFoundation\Tests\Unit\Package\Repository;
+namespace Cognifire\BuilderFoundation\Domain\Repository;
 
 /*                                                                        *
  * This script belongs to the TYPO3 Flow package "Cognifire.BuilderFoundation". *
@@ -11,20 +11,21 @@ namespace Cognifire\BuilderFoundation\Tests\Unit\Package\Repository;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
+use TYPO3\Flow\Annotations as Flow;
+use Cognifire\BuilderFoundation\Persistence\AbstractPackageRepository;
+
 /**
- * Testcase for Package
+ * @Flow\Scope("singleton")
  */
-class ApplicationRepositoryTest extends \TYPO3\Flow\Tests\UnitTestCase {
+abstract class AbstractDerivativePackageRepository extends AbstractPackageRepository {
 
 	/**
-	 * @test
+	 * Overrides automatic detection of the entity class name being managed by the repository.
+	 * Repositories that extend this contain DerivativePackages
+	 *
+	 * @var string
 	 */
-	public function makeSureThatSomethingHolds() {
-		$this->markTestIncomplete('Automatically generated test case; you need to adjust this!');
+	const ENTITY_CLASSNAME = 'Cognifire\BuilderFoundation\Domain\Model\DerivativePackage';
 
-		$expected = 'Foo';
-		$actual = 'Foo'; // This should be the result of some function call
-		$this->assertSame($expected, $actual);
-	}
 }
 ?>

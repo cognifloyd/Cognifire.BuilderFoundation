@@ -1,5 +1,5 @@
 <?php
-namespace Cognifire\BuilderFoundation\Tests\Unit\Package\Repository;
+namespace Cognifire\BuilderFoundation\Domain\Model;
 
 /*                                                                        *
  * This script belongs to the TYPO3 Flow package "Cognifire.BuilderFoundation". *
@@ -11,20 +11,12 @@ namespace Cognifire\BuilderFoundation\Tests\Unit\Package\Repository;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
+use TYPO3\Flow\Annotations as Flow;
+
 /**
- * Testcase for Package
+ * @Flow\Entity
  */
-class BoilerplateRepositoryTest extends \TYPO3\Flow\Tests\UnitTestCase {
+class DerivativePackage extends AbstractPackage {
 
-	/**
-	 * @test
-	 */
-	public function makeSureThatSomethingHolds() {
-		$this->markTestIncomplete('Automatically generated test case; you need to adjust this!');
-
-		$expected = 'Foo';
-		$actual = 'Foo'; // This should be the result of some function call
-		$this->assertSame($expected, $actual);
-	}
 }
 ?>

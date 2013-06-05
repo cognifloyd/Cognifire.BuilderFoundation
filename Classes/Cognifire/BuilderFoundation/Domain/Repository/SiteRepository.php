@@ -1,5 +1,5 @@
 <?php
-namespace Cognifire\BuilderFoundation\Package\Model;
+namespace Cognifire\BuilderFoundation\Domain\Repository;
 
 /*                                                                        *
  * This script belongs to the TYPO3 Flow package "Cognifire.BuilderFoundation". *
@@ -14,50 +14,11 @@ namespace Cognifire\BuilderFoundation\Package\Model;
 use TYPO3\Flow\Annotations as Flow;
 
 /**
- * @Flow\Entity
+ * @Flow\Scope("singleton")
  */
-abstract class AbstractPackage implements PackageInterface {
-
-	/**
-	 * @var string
-	 */
-	protected $packageKey;
-
-	/**
-	 * @var string
-	 */
-	protected $packagePath;
+class SiteRepository extends AbstractDerivativePackageRepository {
 
 
-	/**
-	 * @return string
-	 */
-	public function getPackageKey() {
-		return $this->packageKey;
-	}
-
-	/**
-	 * @param string $packageKey
-	 * @return void
-	 */
-	public function setPackageKey($packageKey) {
-		$this->packageKey = $packageKey;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getPackagePath() {
-		return $this->packagePath;
-	}
-
-	/**
-	 * @param string $packagePath
-	 * @return void
-	 */
-	public function setPackagePath($packagePath) {
-		$this->packagePath = $packagePath;
-	}
 
 }
 ?>
