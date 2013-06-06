@@ -12,11 +12,12 @@ namespace Cognifire\BuilderFoundation\Domain\Repository;
  *                                                                        */
 
 use TYPO3\Flow\Annotations as Flow;
+use Cognifire\BuilderFoundation\Persistence\AbstractPackageRepository;
 
 /**
  * @Flow\Scope("singleton")
  */
-class ApplicationRepository extends AbstractDerivativePackageRepository {
+class DerivativeRepository extends AbstractPackageRepository {
 
 
 

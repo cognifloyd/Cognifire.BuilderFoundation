@@ -41,7 +41,7 @@ abstract class AbstractFileManager implements FileManagerInterface {
 	 * @return void
 	 */
 	public function injectSettings(array $settings) {
-		$this->settings = $settings['persistence'];
+		$this->settings = $settings['paths'];
 	}
 
 	/**

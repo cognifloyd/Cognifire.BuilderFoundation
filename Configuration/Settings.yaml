@@ -1,0 +1,13 @@
+Cognifire:
+  BuilderFoundation:
+    paths:
+      #These should be paths under <Flow_Root>/Packages/
+      boilerplateRepositories:
+        - 'Boilerplate'
+      derivativeRepositories:
+        - 'Application'
+        - 'Site'
+        - 'Framework'
+        #- 'Libraries' #No library support right now. Current focus is on Flow packages.
+        #- 'Boilerplate' #Theoretically, you can generate boilerplate packages as well.
+
