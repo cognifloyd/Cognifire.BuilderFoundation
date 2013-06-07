@@ -11,10 +11,10 @@ namespace Cognifire\BuilderFoundation\Domain\Model;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
-use TYPO3\Flow\Annotations as Flow;
+use Cognifire\BuilderFoundation\Annotations as Builder;
 
 /**
- * @Flow\Entity
+ * @Builder\Entity
  */
 abstract class AbstractPackage implements PackageInterface {
 
@@ -27,37 +27,6 @@ abstract class AbstractPackage implements PackageInterface {
 	 * @var string
 	 */
 	protected $packagePath;
-
-
-	/**
-	 * @return string
-	 */
-	public function getPackageKey() {
-		return $this->packageKey;
-	}
-
-	/**
-	 * @param string $packageKey
-	 * @return void
-	 */
-	public function setPackageKey($packageKey) {
-		$this->packageKey = $packageKey;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getPackagePath() {
-		return $this->packagePath;
-	}
-
-	/**
-	 * @param string $packagePath
-	 * @return void
-	 */
-	public function setPackagePath($packagePath) {
-		$this->packagePath = $packagePath;
-	}
 
 }
 ?>

@@ -10,11 +10,10 @@ namespace Cognifire\BuilderFoundation\Persistence;
  *                                                                        *
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
+use TYPO3\Flow\Persistence\Aspect\PersistenceMagicInterface;
 
 /**
  * The File Manager interface
- *
- * @api
  */
 interface FileManagerInterface {
 
@@ -23,32 +22,29 @@ interface FileManagerInterface {
 	 *
 	 * @param array $settings
 	 * @return void
-	 * @api
 	 */
 	public function injectSettings(array $settings);
 
 	/**
-	 * Initializes the persistence manager, called by Flow.
+	 * Initializes the file manager, called by Flow.
 	 *
 	 * @return void
-	 * @api
 	 */
 	public function initialize();
 
 	/**
 	 * Commits new objects and changes to objects in the current persistence
-	 * session into the backend
+	 * session into the fileManager backend
 	 *
 	 * @return void
-	 * @api
 	 */
 	public function persistAll();
 
 	/**
-	 * Clears the in-memory state of the persistence.
+	 * Clears the in-memory state of the persistence session.
 	 *
 	 * Managed instances become detached, any fetches will
-	 * return data directly from the persistence "backend".
+	 * return data directly from the fileManager "backend".
 	 *
 	 * @return void
 	 */
@@ -59,7 +55,6 @@ interface FileManagerInterface {
 	 *
 	 * @param object $object The object to check
 	 * @return boolean TRUE if the object is new, FALSE if the object exists in the repository
-	 * @api
 	 */
 	public function isNewObject($object);
 
@@ -73,10 +68,10 @@ interface FileManagerInterface {
 	 * Objects registered with this method must be known to the getObjectByIdentifier()
 	 * method.
 	 *
-	 * @param \TYPO3\Flow\Persistence\Aspect\PersistenceMagicInterface $object The new object to register
+	 * @param PersistenceMagicInterface $object The new object to register
 	 * @return void
 	 */
-	public function registerNewObject(\TYPO3\Flow\Persistence\Aspect\PersistenceMagicInterface $object);
+	public function registerNewObject(PersistenceMagicInterface $object);
 
 	/**
 	 * Returns the (internal) identifier for the object, if it is known to the
@@ -88,7 +83,6 @@ interface FileManagerInterface {
 	 *
 	 * @param object $object
 	 * @return mixed The identifier for the object if it is known, or NULL
-	 * @api
 	 */
 	public function getIdentifierByObject($object);
 
@@ -100,7 +94,6 @@ interface FileManagerInterface {
 	 * @param string $objectType
 	 * @param boolean $useLazyLoading Set to TRUE if you want to use lazy loading for this object
 	 * @return object The object for the identifier if it is known, or NULL
-	 * @api
 	 */
 	public function getObjectByIdentifier($identifier, $objectType = NULL, $useLazyLoading = FALSE);
 
@@ -109,8 +102,7 @@ interface FileManagerInterface {
 	 *
 	 * @param object $object The object to be converted
 	 * @return array The identity array in the format array('__identity' => '...')
-	 * @throws \TYPO3\Flow\Persistence\Exception\UnknownObjectException if the given object is not known to the Persistence Manager
-	 * @api
+	 * @throws \TYPO3\Flow\Persistence\Exception\UnknownObjectException if the given object is not known to the File Manager
 	 */
 	public function convertObjectToIdentityArray($object);
 
@@ -118,12 +110,9 @@ interface FileManagerInterface {
 	 * Recursively iterates through the given array and turns objects
 	 * into arrays containing the identity of the domain object.
 	 *
-	 * In both persistenceManager and documentManager
-	 *
 	 * @param array $array The array to be iterated over
 	 * @return array The modified array without objects
-	 * @throws \TYPO3\Flow\Persistence\Exception\UnknownObjectException if array contains objects that are not known to the Persistence Manager
-	 * @api
+	 * @throws \TYPO3\Flow\Persistence\Exception\UnknownObjectException if array contains objects that are not known to the File Manager
 	 * @see convertObjectToIdentityArray()
 	 */
 	public function convertObjectsToIdentityArrays(array $array);
@@ -133,41 +122,31 @@ interface FileManagerInterface {
 	 *
 	 * @param string $type
 	 * @return \TYPO3\Flow\Persistence\QueryInterface
-	 * @api
 	 */
 	public function createQueryForType($type);
 
 	/**
-	 * Adds an object to the persistence.
-	 *
-	 * In both persistenceManager and documentManager
+	 * Adds an object to the persistence session.
 	 *
 	 * @param object $object The object to add
 	 * @return void
-	 * @api
 	 */
 	public function add($object);
 
 	/**
-	 * Removes an object to the persistence.
-	 *
-	 * In both persistenceManager and documentManager
+	 * Removes an object from the persistence session.
 	 *
 	 * @param object $object The object to remove
 	 * @return void
-	 * @api
 	 */
 	public function remove($object);
 
 	/**
-	 * Update an object in the persistence.
-	 *
-	 * In both persistenceManager and documentManager
+	 * Update an object in the persistence session.
 	 *
 	 * @param object $object The modified object
 	 * @return void
 	 * @throws \TYPO3\Flow\Persistence\Exception\UnknownObjectException
-	 * @api
 	 */
 	public function update($object);
 

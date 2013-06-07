@@ -18,8 +18,6 @@ use TYPO3\Flow\Reflection\ObjectAccess;
 
 /**
  * This is a fork of the Flow Persistence Manager base class
- *
- * @api
  */
 abstract class AbstractFileManager implements FileManagerInterface {
 
@@ -41,7 +39,7 @@ abstract class AbstractFileManager implements FileManagerInterface {
 	 * @return void
 	 */
 	public function injectSettings(array $settings) {
-		$this->settings = $settings['paths'];
+		$this->settings = $settings;
 	}
 
 	/**

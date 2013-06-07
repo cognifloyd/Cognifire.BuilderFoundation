@@ -29,8 +29,8 @@ use TYPO3\Flow\Persistence\RepositoryInterface;
  *     if(is_object and reflection->says it is an entity)
  *         return $this->persistenceManager->getIdentifierByObject($value);
  *
- * TODO: See if persistenceManager is really needed in the AbstractPackageRepository
- * TODO: Revisit the idea of reusing the persistenceManager when Flow starts supporting multiple persistence backends
+ * TODO[cognifloyd] See if persistenceManager is really needed in the AbstractPackageRepository
+ * TODO[cognifloyd] Revisit the idea of reusing the persistenceManager when Flow starts supporting multiple persistence backends
  *
  * @Flow\Scope("singleton")
  */
@@ -73,19 +73,17 @@ abstract class AbstractPackageRepository implements RepositoryInterface {
 	 * by the repository.
 	 *
 	 * @return string
-	 * @api
 	 */
 	public function getEntityClassName() {
 		return $this->entityClassName;
 	}
 
 	/**
-	 * Adds an object to this repository.
+	 * Adds a package object to this repository.
 	 *
 	 * @param object $object The object to add
 	 * @return void
 	 * @throws IllegalObjectTypeException
-	 * @api
 	 */
 	public function add($object) {
 		if (!is_object($object) || !($object instanceof $this->entityClassName)) {
@@ -96,11 +94,10 @@ abstract class AbstractPackageRepository implements RepositoryInterface {
 	}
 
 	/**
-	 * Schedules a modified object for persistence.
+	 * Schedules a modified package object for persistence.
 	 *
 	 * @param object $object The modified object
 	 * @throws IllegalObjectTypeException
-	 * @api
 	 */
 	public function update($object) {
 		if (!is_object($object) || !($object instanceof $this->entityClassName)) {
@@ -112,12 +109,11 @@ abstract class AbstractPackageRepository implements RepositoryInterface {
 	}
 
 	/**
-	 * Removes an object from this repository.
+	 * Removes a package object from this repository.
 	 *
 	 * @param object $object The object to remove
 	 * @return void
 	 * @throws IllegalObjectTypeException
-	 * @api
 	 */
 	public function remove($object) {
 		if (!is_object($object) || !($object instanceof $this->entityClassName)) {
@@ -128,10 +124,32 @@ abstract class AbstractPackageRepository implements RepositoryInterface {
 	}
 
 	/**
+	 * Removes all package objects of this repository as if remove() was called for
+	 * all of them.
+	 *
+	 * TODO[cognifloyd] This is very dangerous and should not be allowed, but removeAll is part of the interface.
+	 *
+	 * @return void
+	 */
+	public function removeAll() {
+		foreach ($this->findAll() AS $object) {
+			$this->remove($object);
+		}
+	}
+
+	/**
+	 * Counts all package objects of this repository
+	 *
+	 * @return integer
+	 */
+	public function countAll() {
+		return $this->createQuery()->count();
+	}
+
+	/**
 	 * Returns all objects of this repository
 	 *
 	 * @return \TYPO3\Flow\Persistence\QueryResultInterface The query result
-	 * @api
 	 * @see \TYPO3\Flow\Persistence\QueryInterface::execute()
 	 */
 	public function findAll() {
@@ -143,7 +161,6 @@ abstract class AbstractPackageRepository implements RepositoryInterface {
 	 *
 	 * @param mixed $identifier The identifier of the object to find
 	 * @return object The matching object if found, otherwise NULL
-	 * @api
 	 */
 	public function findByIdentifier($identifier) {
 		return $this->fileManager->getObjectByIdentifier($identifier, $this->entityClassName);
@@ -153,7 +170,6 @@ abstract class AbstractPackageRepository implements RepositoryInterface {
 	 * Returns a query for objects of this repository
 	 *
 	 * @return \TYPO3\Flow\Persistence\QueryInterface
-	 * @api
 	 */
 	public function createQuery() {
 		$query = $this->fileManager->createQueryForType($this->entityClassName);
@@ -161,30 +177,6 @@ abstract class AbstractPackageRepository implements RepositoryInterface {
 			$query->setOrderings($this->defaultOrderings);
 		}
 		return $query;
-	}
-
-	/**
-	 * Counts all objects of this repository
-	 *
-	 * @return integer
-	 * @api
-	 */
-	public function countAll() {
-		return $this->createQuery()->count();
-	}
-
-	/**
-	 * Removes all objects of this repository as if remove() was called for
-	 * all of them.
-	 *
-	 * @return void
-	 * @api
-	 * @todo use DQL here, would be much more performant
-	 */
-	public function removeAll() {
-		foreach ($this->findAll() AS $object) {
-			$this->remove($object);
-		}
 	}
 
 	/**
@@ -196,7 +188,6 @@ abstract class AbstractPackageRepository implements RepositoryInterface {
 	 *
 	 * @param array $defaultOrderings The property names to order by by default
 	 * @return void
-	 * @api
 	 */
 	public function setDefaultOrderings(array $defaultOrderings) {
 		$this->defaultOrderings = $defaultOrderings;
@@ -213,7 +204,6 @@ abstract class AbstractPackageRepository implements RepositoryInterface {
 	 * @param string $method Name of the method
 	 * @param array $arguments The arguments
 	 * @return mixed The result of the repository method
-	 * @api
 	 */
 	public function __call($method, $arguments) {
 		$query = $this->createQuery();
