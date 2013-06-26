@@ -52,11 +52,11 @@ class PersistenceMagicAspect {
 
 	/**
 	 * If there's ever a time where we need multiple properties that combine into one identity, then copy
-	 * Doctrine\ORM\Mapping\Id to Cognifire\BuilderFoundation\Annotations\Id and use Builder\Id instead of Flow\Identity
+	 * -Doctrine\ORM\Mapping\Id to Cognifire\BuilderFoundation\Annotations\Id and use Builder\Id instead of Flow\Identity
 	 *
 	 * @var string
-	 * @Flow\Identity
-	 * @Flow\Introduce("Cognifire\BuilderFoundation\Persistence\Aspect\PersistenceMagicAspect->isEntityOrValueObject && filter(Cognifire\BuilderFoundation\Persistence\Mapping\Driver\BuilderAnnotationDriver)")
+	 * @Builder\Id
+	 * @Flow\Introduce("Cognifire\BuilderFoundation\Persistence\Aspect\PersistenceMagicAspect->isEntityOrValueObject")
 	 */
 	protected $Persistence_Object_Identifier;
 
@@ -74,12 +74,13 @@ class PersistenceMagicAspect {
 	 *
 	 * @param \TYPO3\Flow\Aop\JoinPointInterface $joinPoint The current join point
 	 * @return void
-	 * @Flow\Before("Cognifire\BuilderFoundation\Persistence\Aspect\PersistenceMagicAspect->isEntity && method(.*->(__construct|__clone)()) && filter(Cognifire\BuilderFoundation\Persistence\Mapping\Driver\BuilderAnnotationDriver)")
+	 * @Flow\Before("Cognifire\BuilderFoundation\Persistence\Aspect\PersistenceMagicAspect->isEntity && method(.*->(__construct|__clone)())")
 	 */
 	public function generateUuid(JoinPointInterface $joinPoint) {
 		/** @var $proxy \Cognifire\BuilderFoundation\Persistence\Aspect\PersistenceMagicInterface */
 		$proxy = $joinPoint->getProxy();
 		ObjectAccess::setProperty($proxy, 'Persistence_Object_Identifier', Algorithms::generateUUID(), TRUE);
+		/** @noinspection PhpParamsInspection */
 		$this->persistenceManager->registerNewObject($proxy);
 	}
 
@@ -88,7 +89,7 @@ class PersistenceMagicAspect {
 	 *
 	 * @param \TYPO3\Flow\Aop\JoinPointInterface $joinPoint The current join point
 	 * @return void
-	 * @Flow\Before("classAnnotatedWith(Cognifire\BuilderFoundation\Annotations\ValueObject) && method(.*->__construct()) && filter(Cognifire\BuilderFoundation\Persistence\Mapping\Driver\BuilderAnnotationDriver)")
+	 * @Flow\Before("classAnnotatedWith(Cognifire\BuilderFoundation\Annotations\ValueObject) && method(.*->__construct())")
 	 */
 	public function generateValueHash(JoinPointInterface $joinPoint) {
 		$proxy = $joinPoint->getProxy();

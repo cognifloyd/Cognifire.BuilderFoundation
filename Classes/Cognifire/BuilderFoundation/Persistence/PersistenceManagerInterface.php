@@ -10,12 +10,12 @@ namespace Cognifire\BuilderFoundation\Persistence;
  *                                                                        *
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
-use TYPO3\Flow\Persistence\Aspect\PersistenceMagicInterface;
+use Cognifire\BuilderFoundation\Persistence\Aspect\PersistenceMagicInterface;
 
 /**
  * The File Manager interface
  */
-interface FileManagerInterface {
+interface PersistenceManagerInterface {
 
 	/**
 	 * Injects the Flow settings, called by Flow.
@@ -72,58 +72,6 @@ interface FileManagerInterface {
 	 * @return void
 	 */
 	public function registerNewObject(PersistenceMagicInterface $object);
-
-	/**
-	 * Returns the (internal) identifier for the object, if it is known to the
-	 * backend. Otherwise NULL is returned.
-	 *
-	 * Note: this returns an identifier even if the object has not been
-	 * persisted in case of AOP-managed entities. Use isNewObject() if you need
-	 * to distinguish those cases.
-	 *
-	 * @param object $object
-	 * @return mixed The identifier for the object if it is known, or NULL
-	 */
-	public function getIdentifierByObject($object);
-
-	/**
-	 * Returns the object with the (internal) identifier, if it is known to the
-	 * backend. Otherwise NULL is returned.
-	 *
-	 * @param mixed $identifier
-	 * @param string $objectType
-	 * @param boolean $useLazyLoading Set to TRUE if you want to use lazy loading for this object
-	 * @return object The object for the identifier if it is known, or NULL
-	 */
-	public function getObjectByIdentifier($identifier, $objectType = NULL, $useLazyLoading = FALSE);
-
-	/**
-	 * Converts the given object into an array containing the identity of the domain object.
-	 *
-	 * @param object $object The object to be converted
-	 * @return array The identity array in the format array('__identity' => '...')
-	 * @throws \TYPO3\Flow\Persistence\Exception\UnknownObjectException if the given object is not known to the File Manager
-	 */
-	public function convertObjectToIdentityArray($object);
-
-	/**
-	 * Recursively iterates through the given array and turns objects
-	 * into arrays containing the identity of the domain object.
-	 *
-	 * @param array $array The array to be iterated over
-	 * @return array The modified array without objects
-	 * @throws \TYPO3\Flow\Persistence\Exception\UnknownObjectException if array contains objects that are not known to the File Manager
-	 * @see convertObjectToIdentityArray()
-	 */
-	public function convertObjectsToIdentityArrays(array $array);
-
-	/**
-	 * Return a query object for the given type.
-	 *
-	 * @param string $type
-	 * @return \TYPO3\Flow\Persistence\QueryInterface
-	 */
-	public function createQueryForType($type);
 
 	/**
 	 * Adds an object to the persistence session.

@@ -38,9 +38,9 @@ abstract class AbstractPackageRepository implements RepositoryInterface {
 
 	/**
 	 * @Flow\Inject
-	 * @var \Cognifire\BuilderFoundation\Persistence\FileManagerInterface
+	 * @var \Cognifire\BuilderFoundation\Persistence\PersistenceManagerInterface
 	 */
-	protected $fileManager;
+	protected $persistenceManager;
 
 	/**
 	 * Warning: if you think you want to set this,
@@ -90,7 +90,7 @@ abstract class AbstractPackageRepository implements RepositoryInterface {
 			$type = (is_object($object) ? get_class($object) : gettype($object));
 			throw new IllegalObjectTypeException('The value given to add() was ' . $type . ' , however the ' . get_class($this) . ' can only store ' . $this->entityClassName . ' instances.', 1298403438);
 		}
-		$this->fileManager->add($object);
+		$this->persistenceManager->add($object);
 	}
 
 	/**
@@ -105,7 +105,7 @@ abstract class AbstractPackageRepository implements RepositoryInterface {
 			throw new IllegalObjectTypeException('The value given to update() was ' . $type . ' , however the ' . get_class($this) . ' can only store ' . $this->entityClassName . ' instances.', 1249479625);
 		}
 
-		$this->fileManager->update($object);
+		$this->persistenceManager->update($object);
 	}
 
 	/**
@@ -120,7 +120,7 @@ abstract class AbstractPackageRepository implements RepositoryInterface {
 			$type = (is_object($object) ? get_class($object) : gettype($object));
 			throw new IllegalObjectTypeException('The value given to remove() was ' . $type . ' , however the ' . get_class($this) . ' can only handle ' . $this->entityClassName . ' instances.', 1298403442);
 		}
-		$this->fileManager->remove($object);
+		$this->persistenceManager->remove($object);
 	}
 
 	/**
@@ -163,20 +163,7 @@ abstract class AbstractPackageRepository implements RepositoryInterface {
 	 * @return object The matching object if found, otherwise NULL
 	 */
 	public function findByIdentifier($identifier) {
-		return $this->fileManager->getObjectByIdentifier($identifier, $this->entityClassName);
-	}
-
-	/**
-	 * Returns a query for objects of this repository
-	 *
-	 * @return \TYPO3\Flow\Persistence\QueryInterface
-	 */
-	public function createQuery() {
-		$query = $this->fileManager->createQueryForType($this->entityClassName);
-		if ($this->defaultOrderings !== array()) {
-			$query->setOrderings($this->defaultOrderings);
-		}
-		return $query;
+		return $this->persistenceManager->getObjectByIdentifier($identifier, $this->entityClassName);
 	}
 
 	/**
@@ -191,6 +178,15 @@ abstract class AbstractPackageRepository implements RepositoryInterface {
 	 */
 	public function setDefaultOrderings(array $defaultOrderings) {
 		$this->defaultOrderings = $defaultOrderings;
+	}
+
+	/**
+	 * Returns a query for objects of this repository
+	 *
+	 * @return \TYPO3\Flow\Persistence\QueryInterface
+	 */
+	public function createQuery() {
+		// TODO: Implement createQuery() method.
 	}
 
 	/**

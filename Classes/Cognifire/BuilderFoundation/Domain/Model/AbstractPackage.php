@@ -19,6 +19,7 @@ use Cognifire\BuilderFoundation\Annotations as Builder;
 abstract class AbstractPackage implements PackageInterface {
 
 	/**
+	 * @Builder\Config
 	 * @var string
 	 */
 	protected $packageKey;
@@ -27,6 +28,17 @@ abstract class AbstractPackage implements PackageInterface {
 	 * @var string
 	 */
 	protected $packagePath;
+
+	/**
+	 * Directory structure of a package (DefinitiveGuide Part II / View)
+	 *
+	 * Classes/				All php files
+	 * Documentation/		Package manual and other docs
+	 * Meta/				package meta info like license files
+	 * Resources/			Top folder for resources
+	 * Resources/Public/	Public resources will be mirrored to the Web directory
+	 * Resources/Private/	Private resources won't be mirrored to the Web directory
+	 */
 
 }
 ?>

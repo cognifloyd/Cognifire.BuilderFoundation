@@ -19,7 +19,5 @@ use Cognifire\BuilderFoundation\Persistence\AbstractPackageRepository;
  */
 class BoilerplateRepository extends AbstractPackageRepository {
 
-
-
 }
 ?>

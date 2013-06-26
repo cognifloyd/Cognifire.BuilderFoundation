@@ -13,12 +13,12 @@ namespace Cognifire\BuilderFoundation\Persistence;
 
 use TYPO3\Flow\Annotations as Flow;
 use TYPO3\Flow\Persistence\Exception\UnknownObjectException;
-use TYPO3\Flow\Persistence\Generic\Backend\BackendInterface;
-use TYPO3\Flow\Persistence\Generic\DataMapper;
+//use TYPO3\Flow\Persistence\Generic\Backend\BackendInterface;
+//use TYPO3\Flow\Persistence\Generic\DataMapper;
 use TYPO3\Flow\Persistence\Generic\Exception\MissingBackendException;
-use TYPO3\Flow\Persistence\Generic\QueryFactoryInterface;
+//use TYPO3\Flow\Persistence\Generic\QueryFactoryInterface;
 use TYPO3\Flow\Persistence\Generic\Session;
-use TYPO3\Flow\Persistence\QueryInterface;
+//use TYPO3\Flow\Persistence\QueryInterface;
 
 /**
  * This is a fork of the generic Flow Persistence Manager
@@ -26,7 +26,7 @@ use TYPO3\Flow\Persistence\QueryInterface;
  * @Flow\Scope("singleton")
  * @api
  */
-class FileManager extends AbstractFileManager {
+class PersistenceManager extends AbstractPersistenceManager {
 
 	/**
 	 * @var \SplObjectStorage
@@ -46,17 +46,17 @@ class FileManager extends AbstractFileManager {
 	/**
 	 * @var QueryFactoryInterface
 	 */
-	protected $queryFactory;
+	//protected $queryFactory;
 
 	/**
 	 * @var DataMapper
 	 */
-	protected $dataMapper;
+	//protected $dataMapper;
 
 	/**
 	 * @var BackendInterface
 	 */
-	protected $backend;
+	//protected $backend;
 
 	/**
 	 * @var Session
@@ -78,9 +78,9 @@ class FileManager extends AbstractFileManager {
 	 * @param QueryFactoryInterface $queryFactory
 	 * @return void
 	 */
-	public function injectQueryFactory(QueryFactoryInterface $queryFactory) {
+	/*public function injectQueryFactory(QueryFactoryInterface $queryFactory) {
 		$this->queryFactory = $queryFactory;
-	}
+	}*/
 
 	/**
 	 * Injects the data mapper
@@ -88,10 +88,10 @@ class FileManager extends AbstractFileManager {
 	 * @param DataMapper $dataMapper
 	 * @return void
 	 */
-	public function injectDataMapper(DataMapper $dataMapper) {
+	/*public function injectDataMapper(DataMapper $dataMapper) {
 		$this->dataMapper = $dataMapper;
 		$this->dataMapper->setPersistenceManager($this);
-	}
+	}*/
 
 	/**
 	 * Injects the backend to use
@@ -100,9 +100,9 @@ class FileManager extends AbstractFileManager {
 	 * @return void
 	 * @Flow\Autowiring(false)
 	 */
-	public function injectBackend(BackendInterface $backend) {
+	/*public function injectBackend(BackendInterface $backend) {
 		$this->backend = $backend;
-	}
+	}*/
 
 	/**
 	 * Injects the persistence session
@@ -121,11 +121,12 @@ class FileManager extends AbstractFileManager {
 	 * @throws MissingBackendException
 	 */
 	public function initialize() {
-		if (!$this->backend instanceof BackendInterface) {
+		/*if (!$this->backend instanceof BackendInterface) {
 			throw new MissingBackendException('A persistence backend must be set prior to initializing the persistence manager.', 1215508456);
 		}
+		//TODO[cognifloyd] check out the backend
 		$this->backend->setPersistenceManager($this);
-		$this->backend->initialize($this->settings['backendOptions']);
+		$this->backend->initialize($this->settings['backendOptions']);*/
 	}
 
 	/**
@@ -135,9 +136,9 @@ class FileManager extends AbstractFileManager {
 	 * @return integer
 	 * @api
 	 */
-	public function getObjectCountByQuery(QueryInterface $query) {
+	/*public function getObjectCountByQuery(QueryInterface $query) {
 		return $this->backend->getObjectCountByQuery($query);
-	}
+	}*/
 
 	/**
 	 * Returns the object data matching the $query.
@@ -146,9 +147,9 @@ class FileManager extends AbstractFileManager {
 	 * @return array
 	 * @api
 	 */
-	public function getObjectDataByQuery(QueryInterface $query) {
+	/*public function getObjectDataByQuery(QueryInterface $query) {
 		return $this->backend->getObjectDataByQuery($query);
-	}
+	}*/
 
 	/**
 	 * Commits new objects and changes to objects in the current persistence
@@ -162,10 +163,10 @@ class FileManager extends AbstractFileManager {
 			// the underlying storage layer
 			// reconstituted entities must be fetched from the session and checked
 			// for changes by the underlying backend as well!
-		$this->backend->setAggregateRootObjects($this->addedObjects);
+		/*$this->backend->setAggregateRootObjects($this->addedObjects);
 		$this->backend->setChangedEntities($this->changedObjects);
 		$this->backend->setDeletedEntities($this->removedObjects);
-		$this->backend->commit();
+		$this->backend->commit();*/
 
 		$this->addedObjects = new \SplObjectStorage();
 		$this->removedObjects = new \SplObjectStorage();
@@ -214,9 +215,9 @@ class FileManager extends AbstractFileManager {
 	 * @return mixed The identifier for the object if it is known, or NULL
 	 * @api
 	 */
-	public function getIdentifierByObject($object) {
+	/*public function getIdentifierByObject($object) {
 		return $this->persistenceSession->getIdentifierByObject($object);
-	}
+	}*/
 
 	/**
 	 * Returns the object with the (internal) identifier, if it is known to the
@@ -229,7 +230,7 @@ class FileManager extends AbstractFileManager {
 	 * @api
 	 */
 	public function getObjectByIdentifier($identifier, $objectType = NULL, $useLazyLoading = FALSE) {
-		if (isset($this->newObjects[$identifier])) {
+		/*if (isset($this->newObjects[$identifier])) {
 			return $this->newObjects[$identifier];
 		}
 		if ($this->persistenceSession->hasIdentifier($identifier)) {
@@ -241,7 +242,7 @@ class FileManager extends AbstractFileManager {
 			} else {
 				return NULL;
 			}
-		}
+		}*/
 	}
 
 	/**
@@ -252,9 +253,9 @@ class FileManager extends AbstractFileManager {
 	 * @param string $objectType
 	 * @return object The object data for the identifier if it is known, or FALSE
 	 */
-	public function getObjectDataByIdentifier($identifier, $objectType = NULL) {
+	/*public function getObjectDataByIdentifier($identifier, $objectType = NULL) {
 		return $this->backend->getObjectDataByIdentifier($identifier, $objectType);
-	}
+	}*/
 
 	/**
 	 * Return a query object for the given type.
@@ -262,9 +263,9 @@ class FileManager extends AbstractFileManager {
 	 * @param string $type
 	 * @return QueryInterface
 	 */
-	public function createQueryForType($type) {
+	/*public function createQueryForType($type) {
 		return $this->queryFactory->create($type);
-	}
+	}*/
 
 	/**
 	 * Adds an object to the persistence.

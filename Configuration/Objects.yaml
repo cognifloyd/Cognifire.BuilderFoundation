@@ -1,0 +1,2 @@
+Cognifire\BuilderFoundation\Persistence\PersistenceManagerInterface:
+  className: Cognifire\BuilderFoundation\Persistence\PersistenceManager

@@ -11,15 +11,14 @@ namespace Cognifire\BuilderFoundation\Persistence;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
-use Cognifire\BuilderFoundation\Persistence\FileManagerInterface;
-use TYPO3\Flow\Persistence\Aspect\PersistenceMagicInterface;
+use Cognifire\BuilderFoundation\Persistence\Aspect\PersistenceMagicInterface;
 use TYPO3\Flow\Persistence\Exception\UnknownObjectException;
 use TYPO3\Flow\Reflection\ObjectAccess;
 
 /**
  * This is a fork of the Flow Persistence Manager base class
  */
-abstract class AbstractFileManager implements FileManagerInterface {
+abstract class AbstractPersistenceManager implements PersistenceManagerInterface {
 
 	/**
 	 * @var array
@@ -76,13 +75,13 @@ abstract class AbstractFileManager implements FileManagerInterface {
 	 * @return array The identity array in the format array('__identity' => '...')
 	 * @throws UnknownObjectException if the given object is not known to the Persistence Manager
 	 */
-	public function convertObjectToIdentityArray($object) {
+	/*public function convertObjectToIdentityArray($object) {
 		$identifier = $this->getIdentifierByObject($object);
 		if ($identifier === NULL) {
 			throw new UnknownObjectException('The given object is unknown to the Persistence Manager.', 1302628242);
 		}
 		return array('__identity' => $identifier);
-	}
+	}*/
 
 	/**
 	 * Recursively iterates through the given array and turns objects
@@ -92,7 +91,7 @@ abstract class AbstractFileManager implements FileManagerInterface {
 	 * @return array The modified array without objects
 	 * @throws UnknownObjectException if array contains objects that are not known to the Persistence Manager
 	 */
-	public function convertObjectsToIdentityArrays(array $array) {
+	/*public function convertObjectsToIdentityArrays(array $array) {
 		foreach ($array as $key => $value) {
 			if (is_array($value)) {
 				$array[$key] = $this->convertObjectsToIdentityArrays($value);
@@ -103,7 +102,7 @@ abstract class AbstractFileManager implements FileManagerInterface {
 			}
 		}
 		return $array;
-	}
+	}*/
 }
 
 ?>
