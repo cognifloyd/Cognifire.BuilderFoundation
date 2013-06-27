@@ -40,4 +40,33 @@ use TYPO3\Flow\Annotations as Flow;
  */
 abstract class AbstractBlob implements BlobInterface {
 
+	/**
+	 * This is the raw contents of the file.
+	 *
+	 * TODO[cognifloyd] I'd like this to be lazy loaded, but I'm not sure how to do that.
+	 * For now, do I load the contents through a setter, a constructor, or ...?
+	 *
+	 * @var string
+	 */
+	protected $contents = '';
+
+	/**
+	 * The parser for this fileType, used to interact with the contents of the blob
+	 * (generally via some kind of syntaxTree)
+	 * **Classes that subclass this class should override this var's type with a parser object**
+	 *
+	 * Ideally, the parser should preserve whitespace when writing this back to a file.
+	 *
+	 * @var mixed
+	 */
+	protected $parser;
+
+	/**
+	 * Generally, interact with the syntaxTree (probably an array or a special object)
+	 * to add or remove something in a blob.
+	 * **Classes that subclass this class should override this var's type with a parser object**
+	 * @var mixed
+	 */
+	protected $syntaxTree;
+
 }
