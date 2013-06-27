@@ -67,7 +67,6 @@ script:
   - bin/phpcs --extensions=php --standard=Packages/Libraries/typo3-qa/typo3flow/ruleset.xml	Packages/Application
   - if [[ "$DB" == "mysql" ]]; then ./flow doctrine:migrate --quiet && ./flow doctrine:migrate --version 0 --quiet ; fi
   - echo "Framework Tested."
-  - bin/phpunit -c Build/PhpUnit/UnitTests.xml && bin/phpunit -c Build/PhpUnit/FunctionalTests.xml
   # [Replace Package key here]
   - bin/behat -v -c Packages/Application/Cognifire.BuilderFoundation/Tests/Behavior/behat.yml
   - cd ../Cognifire.BuilderFoundation
