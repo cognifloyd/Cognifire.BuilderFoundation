@@ -16,23 +16,11 @@ namespace Cognifire\BuilderFoundation\Blob;
 use TYPO3\Flow\Annotations as Flow;
 
 /**
- * You should extend this if you want to allow a builder to handle an additional media type or file type (ie a blob).
+ * This should manipulate text files with regex. It is the simplest kind of media to edit.
+ * This serves as an example of how to extend the AbstractMedia Factory.
  *
- * Register your BlobFactory by
- * TODO[cognifloyd] Create some kind of BlobFactoryRegistry to pick how to deal with each blob based on mediaType
- * The BlobFactoryRegistry expects singleton classes for each mediaType.
- *
- * Potential possible Factories include:
- * - Text (Plain text file would be edited via regex)
- * - Fluid
- * - PHP
- * - TypoScript
- * - YAML
- * - CSS (& variants: SASS/SCSS, LESS)
- * TODO[cognifloyd] Is BlobHandler a better name than BlobFactory?
- *
- * @api
+ * @Flow\Scope("singleton")
  */
-abstract class AbstractBlobFactory implements BlobFactoryInterface {
+class TextBlob extends AbstractBlob {
 
 }

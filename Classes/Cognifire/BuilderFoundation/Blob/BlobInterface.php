@@ -17,11 +17,11 @@ use TYPO3\Flow\Annotations as Flow;
 
 /**
  * This is the contract for various media types or file types (ie blobs).
- * **Instead of implementing this interface, subclassing {@link AbstractBlobFactory} is more appropriate
+ * **Instead of implementing this interface, subclassing {@link AbstractBlob} is more appropriate
  * in most cases**.
  *
  * @api
  */
-interface BlobFactoryInterface {
+interface BlobInterface {
 
 }
