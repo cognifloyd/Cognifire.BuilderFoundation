@@ -1,5 +1,5 @@
 <?php
-namespace Cognifire\BuilderFoundation\Blob;
+namespace Cognifire\BuilderFoundation\Domain\Model\Blob;
 
 /*                                                                        *
  * This script belongs to the TYPO3 Flow package                          *
