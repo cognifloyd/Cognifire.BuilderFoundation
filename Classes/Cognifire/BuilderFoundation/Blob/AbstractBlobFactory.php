@@ -1,8 +1,9 @@
 <?php
-namespace Cognifire\BuilderFoundation\Core;
+namespace Cognifire\BuilderFoundation\Blob;
 
 /*                                                                        *
- * This script belongs to the TYPO3 Flow package "Cognifire.BuilderBase". *
+ * This script belongs to the TYPO3 Flow package                          *
+ * "Cognifire.BuilderFoundation".                                         *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU General Public License, either version 3 of the   *
@@ -15,9 +16,8 @@ namespace Cognifire\BuilderFoundation\Core;
 use TYPO3\Flow\Annotations as Flow;
 
 /**
- * This should manipulate text files with regex. It is the simplest kind of media to edit.
- * This serves as an example of how to extend the AbstractMedia Factory.
+ *
  */
-class TextMediaFactory extends AbstractMediaFactory {
+abstract class AbstractBlobFactory implements BlobFactoryInterface {
 
 }

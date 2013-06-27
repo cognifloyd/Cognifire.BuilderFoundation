@@ -1,8 +1,9 @@
 <?php
-namespace Cognifire\BuilderFoundation\Core;
+namespace Cognifire\BuilderFoundation\Blob;
 
 /*                                                                        *
- * This script belongs to the TYPO3 Flow package "Cognifire.BuilderBase". *
+ * This script belongs to the TYPO3 Flow package                          *
+ * "Cognifire.BuilderFoundation".                                         *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU General Public License, either version 3 of the   *
@@ -16,6 +17,7 @@ use TYPO3\Flow\Annotations as Flow;
 
 /**
  * This is the contract for various media. Typically, a media is a file of a specific type.
+ *
  * Possible Factories include:
  * - Text (Plain text file would be edited via regex)
  * - Fluid
@@ -24,6 +26,6 @@ use TYPO3\Flow\Annotations as Flow;
  * - YAML
  * - CSS (& variants: SASS/SCSS, LESS)
  */
-interface MediaFactoryInterface {
+interface BlobFactoryInterface {
 
 }
