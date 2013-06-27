@@ -54,7 +54,7 @@ before_script:
   - if [[ "$DB" == "postgres" ]]; then psql -U postgres -c 'create database flow;' && curl -Lk https://gist.github.com/raw/4276117/40b5254f29e23ff3dcdf36ae72738ad71f9d9048/Settings.Postgresql.yaml > Configuration/Settings.yaml ; fi
   - mkdir -p Build/PhpUnit && curl -Lk https://gist.github.com/raw/4276117/950465122f99e9c1506495c50332891f2cb89f9d/FunctionalTests.xml > Build/PhpUnit/FunctionalTests.xml
   - curl -Lk https://gist.github.com/raw/4276117/af763946bd4fc7f0a0462952d71f68288a39c610/UnitTests.xml > Build/PhpUnit/UnitTests.xml
-  - mkdir -p Build/Behat && curl -Lk https://git.typo3.org/TYPO3v5/Distributions/Base.git/blob_plain/da9d6218a68b74db389fc314a9f16e12de52de52:/Build/Behat/composer.json > Build/Behat/composer.json
+  - mkdir -p Build/Behat && curl -Lk https://git.typo3.org/Neos/Distributions/Base.git/blob_plain/da9d6218a68b74db389fc314a9f16e12de52de52:/Build/Behat/composer.json > Build/Behat/composer.json
   - cd Build/Behat && composer install --verbose && cd ../..
   - mkdir -p Configuration/Testing/Behat && cp Configuration/Settings.yaml Configuration/Testing/Behat/
   - mkdir -p Configuration/Development/Behat && cp Configuration/Settings.yaml Configuration/Development/Behat/
