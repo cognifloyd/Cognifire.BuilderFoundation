@@ -1,5 +1,5 @@
 <?php
-namespace Cognifire\BuilderFoundation\Domain\Model\Blob;
+namespace Cognifire\BuilderFoundation\Domain\Model\Package;
 
 /*                                                                        *
  * This script belongs to the TYPO3 Flow package                          *
@@ -16,9 +16,8 @@ namespace Cognifire\BuilderFoundation\Domain\Model\Blob;
 use TYPO3\Flow\Annotations as Flow;
 
 /**
- * This should manipulate text files with regex. It is the simplest kind of media to edit.
- * This serves as an example of how to extend the AbstractMedia Factory.
+ * TODO[cognifloyd] This needs DerivativePackageStrategies so that both TYPO3 Flow and TYPO3CMS Deriatives are supported
  */
-class TextBlob extends AbstractBlob {
+class DerivativePackage extends AbstractPackage {
 
 }
