@@ -16,15 +16,11 @@ namespace Cognifire\BuilderFoundation\Blob;
 use TYPO3\Flow\Annotations as Flow;
 
 /**
- * This is the contract for various media. Typically, a media is a file of a specific type.
+ * This is the contract for various media types or file types (ie blobs).
+ * **Instead of implementing this interface, subclassing {@link AbstractBlobFactory} is more appropriate
+ * in most cases**.
  *
- * Possible Factories include:
- * - Text (Plain text file would be edited via regex)
- * - Fluid
- * - PHP
- * - TypoScript
- * - YAML
- * - CSS (& variants: SASS/SCSS, LESS)
+ * @api
  */
 interface BlobFactoryInterface {
 

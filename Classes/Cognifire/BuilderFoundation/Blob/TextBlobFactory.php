@@ -18,6 +18,8 @@ use TYPO3\Flow\Annotations as Flow;
 /**
  * This should manipulate text files with regex. It is the simplest kind of media to edit.
  * This serves as an example of how to extend the AbstractMedia Factory.
+ *
+ * @Flow/Scope("Singleton")
  */
 class TextBlobFactory extends AbstractBlobFactory {
 
