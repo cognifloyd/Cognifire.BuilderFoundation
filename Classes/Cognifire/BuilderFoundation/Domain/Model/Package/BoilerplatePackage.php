@@ -16,8 +16,8 @@ namespace Cognifire\BuilderFoundation\Domain\Model\Package;
 use TYPO3\Flow\Annotations as Flow;
 
 /**
- *
+ * A Boilerplate is always a Flow Package.
  */
-class BoilerplatePackage extends AbstractPackage {
+class BoilerplatePackage extends AbstractFlowPackage {
 
 }

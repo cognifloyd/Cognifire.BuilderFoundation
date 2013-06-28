@@ -14,11 +14,32 @@ namespace Cognifire\BuilderFoundation\Domain\Model\Package;
 
 
 use TYPO3\Flow\Annotations as Flow;
+use TYPO3\Flow\Package\Package;
 
 /**
- * Interface for a generic package
+ * A Flow Package
+ * This wraps an instance of TYPO3\Flow\Package\PackageInterface
  */
-interface PackageInterface {
+abstract class AbstractFlowPackage extends AbstractPackage {
+
+	/**
+	 * @var \TYPO3\Flow\Package\PackageManagerInterface
+	 * @Flow\Inject
+	 */
+	protected $packageManager;
+
+	/**
+	 * @var \TYPO3\Flow\Package\PackageInterface
+	 */
+	protected $flowPackage;
+
+	/**
+	 * @param $packageKey string
+	 */
+	public function __construct($packageKey) {
+		//TODO[cognifloyd] What do I do if the package doesn't exist yet?
+		$this->flowPackage = $this->packageManager->getPackage($packageKey);
+	}
 
 	/**
 	 * Returns the package key of this package.
@@ -26,7 +47,9 @@ interface PackageInterface {
 	 * @return string
 	 * @api
 	 */
-	public function getPackageKey();
+	public function getPackageKey() {
+		return $this->flowPackage->getPackageKey();
+	}
 
 	/**
 	 * Returns the full path to this package's main directory
@@ -34,5 +57,18 @@ interface PackageInterface {
 	 * @return string Path to this package's main directory
 	 * @api
 	 */
-	public function getPackagePath();
+	public function getPackagePath() {
+		return $this->flowPackage->getPackagePath();
+	}
+
+	/**
+	 * Returns the PHP namespace of classes in this package.
+	 *
+	 * @return string
+	 * @api
+	 */
+	public function getNamespace() {
+		$this->flowPackage->getNamespace();
+	}
+
 }

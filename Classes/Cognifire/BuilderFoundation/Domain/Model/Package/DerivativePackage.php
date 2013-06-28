@@ -16,6 +16,7 @@ namespace Cognifire\BuilderFoundation\Domain\Model\Package;
 use TYPO3\Flow\Annotations as Flow;
 
 /**
+ * Derivatives aren't always Flow Packages
  * TODO[cognifloyd] This needs DerivativePackageStrategies so that both TYPO3 Flow and TYPO3CMS Deriatives are supported
  */
 class DerivativePackage extends AbstractPackage {

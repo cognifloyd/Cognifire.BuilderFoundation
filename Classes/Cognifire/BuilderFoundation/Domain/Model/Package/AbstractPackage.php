@@ -16,8 +16,22 @@ namespace Cognifire\BuilderFoundation\Domain\Model\Package;
 use TYPO3\Flow\Annotations as Flow;
 
 /**
- *
+ * Packages consist of a DirectoryIterator and a bunch of blobs (a blob can be a file, or a portion of a file)
  */
 class AbstractPackage implements PackageInterface {
 
+	//TODO[cognifloyd] Add directory iterator
+
+	/**
+	 * @var array<\Cognifire\BuilderFoundation\Domain\Model\Blob\BlobInterface>
+	 */
+	protected $blobs = array();
+
+	public function getPackageKey() {
+		// TODO: Implement getPackageKey() method.
+	}
+
+	public function getPackagePath() {
+		// TODO: Implement getPackagePath() method.
+	}
 }
