@@ -14,6 +14,7 @@ namespace Cognifire\BuilderFoundation\Domain\Model\Package;
 
 
 use TYPO3\Flow\Annotations as Flow;
+use Cognifire\BuilderFoundation\Package\Flow\AbstractFlowPackage;
 
 /**
  * A Boilerplate is always a Flow Package.
