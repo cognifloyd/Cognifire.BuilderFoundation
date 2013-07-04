@@ -1,0 +1,5 @@
+TYPO3:
+  Flow:
+    package:
+      packagesPathByType:
+        'typo3-flow-boilerplate': 'Boilerplates'
