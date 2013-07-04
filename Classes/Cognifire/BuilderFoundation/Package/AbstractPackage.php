@@ -1,5 +1,5 @@
 <?php
-namespace Cognifire\BuilderFoundation\Domain\Model\Package;
+namespace Cognifire\BuilderFoundation\Package;
 
 /*                                                                        *
  * This script belongs to the TYPO3 Flow package                          *
@@ -18,7 +18,7 @@ use TYPO3\Flow\Annotations as Flow;
 /**
  * Packages consist of a DirectoryIterator and a bunch of blobs (a blob can be a file, or a portion of a file)
  */
-class AbstractPackage implements PackageInterface {
+abstract class AbstractPackage implements PackageInterface {
 
 	//TODO[cognifloyd] Add directory iterator
 
@@ -27,11 +27,4 @@ class AbstractPackage implements PackageInterface {
 	 */
 	protected $blobs = array();
 
-	public function getPackageKey() {
-		// TODO: Implement getPackageKey() method.
-	}
-
-	public function getPackagePath() {
-		// TODO: Implement getPackagePath() method.
-	}
 }

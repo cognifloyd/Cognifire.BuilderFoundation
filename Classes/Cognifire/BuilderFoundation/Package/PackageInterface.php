@@ -1,5 +1,5 @@
 <?php
-namespace Cognifire\BuilderFoundation\Domain\Model\Package;
+namespace Cognifire\BuilderFoundation\Package;
 
 /*                                                                        *
  * This script belongs to the TYPO3 Flow package                          *
@@ -14,32 +14,11 @@ namespace Cognifire\BuilderFoundation\Domain\Model\Package;
 
 
 use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Package\Package;
 
 /**
- * A Flow Package
- * This wraps an instance of TYPO3\Flow\Package\PackageInterface
+ * Interface for a generic package
  */
-abstract class AbstractFlowPackage extends AbstractPackage {
-
-	/**
-	 * @var \TYPO3\Flow\Package\PackageManagerInterface
-	 * @Flow\Inject
-	 */
-	protected $packageManager;
-
-	/**
-	 * @var \TYPO3\Flow\Package\PackageInterface
-	 */
-	protected $flowPackage;
-
-	/**
-	 * @param $packageKey string
-	 */
-	public function __construct($packageKey) {
-		//TODO[cognifloyd] What do I do if the package doesn't exist yet?
-		$this->flowPackage = $this->packageManager->getPackage($packageKey);
-	}
+interface PackageInterface {
 
 	/**
 	 * Returns the package key of this package.
@@ -47,9 +26,7 @@ abstract class AbstractFlowPackage extends AbstractPackage {
 	 * @return string
 	 * @api
 	 */
-	public function getPackageKey() {
-		return $this->flowPackage->getPackageKey();
-	}
+	public function getPackageKey();
 
 	/**
 	 * Returns the full path to this package's main directory
@@ -57,9 +34,7 @@ abstract class AbstractFlowPackage extends AbstractPackage {
 	 * @return string Path to this package's main directory
 	 * @api
 	 */
-	public function getPackagePath() {
-		return $this->flowPackage->getPackagePath();
-	}
+	public function getPackagePath();
 
 	/**
 	 * Returns the PHP namespace of classes in this package.
@@ -67,8 +42,13 @@ abstract class AbstractFlowPackage extends AbstractPackage {
 	 * @return string
 	 * @api
 	 */
-	public function getNamespace() {
-		$this->flowPackage->getNamespace();
-	}
+	public function getNamespace();
+
+	/**
+	 * Returns the package meta object of this package.
+	 *
+	 * @return \TYPO3\Flow\Package\MetaData
+	 */
+	public function getPackageMetaData();
 
 }
