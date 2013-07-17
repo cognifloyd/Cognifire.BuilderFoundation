@@ -28,6 +28,9 @@ use TYPO3\Flow\Annotations as Flow;
  * - YAML
  * - CSS (& variants: SASS/SCSS, LESS)
  *
+ * A blob may also serve as a kind of generic syntax tree used to build blobs. For example, the PackageBuilder
+ * might create a DomainBlob that is a more abstract version of a PhpBlob
+ *
  * This is not called a File or a Stream on purpose. It is a string that can be edited as a particular mediaType.
  * Blobs can contain other blobs and do not have to be part of a package, though they are generally just package files.
  * A blob could be:
@@ -36,37 +39,101 @@ use TYPO3\Flow\Annotations as Flow;
  * - a stream (like a snippet from some snippet service on a remote server somewhere)
  * - a part of a stream (a multi-part mime email perhaps)
  *
+ * Blobs are not explicitly part of a package, so there is not packageKey.
+ * to get blobs from a package, you use BlobQuery to get the initial set of
+ * from a given package.
+ *
+ * subBlobs should be stored in whatever properties make sense for the domain.
+ * TODO[cognifloyd] Need something to autodetect which injected objects are @Blob/Entity to make selecting subBlobs easier
+ *
+ * also, this needs some kind of identity
+ * TODO[cognifloyd] Probably using a magic identity aspect like Flow's persistence layer does
+ *
+ * also, the contents could be extracted to a blobData class to act as a proxy
+ * only load the contents if they are accessed.
+ * TODO[cognifloyd] Implement the BlobData class. For now, it's just a $contents string.
+ *
  * @api
  */
 abstract class AbstractBlob implements BlobInterface {
 
-	/**
-	 * This is the raw contents of the file.
+    /**
+	 * This is a string that must be defined in every Blob. One Blob Class = One BlobType.
+	 * A blob may have sub-types, but that is not implemented right now.
 	 *
-	 * TODO[cognifloyd] I'd like this to be lazy loaded, but I'm not sure how to do that.
-	 * For now, do I load the contents through a setter, a constructor, or ...?
+	 * **Classes that subclass this class should use this var to specify the BlobType**
+     *
+     * @var string
+	 * @api
+     */
+    protected $blobType = '';
+
+	/**
+	 * This is the raw contents of the file/snippet/stream (blob).
+	 *
+	 * TODO[cognifloyd] I'd like this to be lazy loaded possibly through a BlobData object
+	 * For now, load the contents through setContents($contents);
 	 *
 	 * @var string
 	 */
 	protected $contents = '';
 
 	/**
-	 * The parser for this fileType, used to interact with the contents of the blob
-	 * (generally via some kind of syntaxTree)
-	 * **Classes that subclass this class should override this var's type with a parser object**
-	 *
-	 * Ideally, the parser should preserve whitespace when writing this back to a file.
-	 *
-	 * @var mixed
-	 */
-	protected $parser;
+	 * {@inheritdoc}
+     *
+     * @param  string $method
+     * @param  array $arguments return new FlowQuery()->$method($arguments)
+     * @return \TYPO3\Eel\FlowQuery\FlowQuery
+	 * @api
+     */
+    public function __call($method, $arguments) {
+        $returnValue = null;
 
-	/**
-	 * Generally, interact with the syntaxTree (probably an array or a special object)
-	 * to add or remove something in a blob.
-	 * **Classes that subclass this class should override this var's type with a parser object**
-	 * @var mixed
-	 */
-	protected $syntaxTree;
+        return $returnValue;
+    }
 
+    /**
+	 * {@inheritdoc}
+     *
+     * @return string
+	 * @api
+     */
+    public function getBlobType() {
+        return $this->blobType;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @param  string $blobType
+     * @return void
+     */
+    public function setBlobType($blobType) {
+		$this->blobType = $blobType;
+    }
+
+    /**
+	 * {@inheritdoc}
+	 *
+	 * **Classes that subclass this class should override this method**
+     *
+     * @return string
+	 * @api
+     */
+    public function __toString() {
+		return $this->contents;
+	}
+
+    /**
+	 * {@inheritdoc}
+     *
+	 * **Classes that subclass this class should override this method**
+     *
+     * @param  $string
+     * @return void
+	 * @api
+     */
+    public function setContents($string) {
+		$this->contents = $string;
+	}
 }

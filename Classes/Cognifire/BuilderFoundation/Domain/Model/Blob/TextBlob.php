@@ -17,8 +17,37 @@ use TYPO3\Flow\Annotations as Flow;
 
 /**
  * This should manipulate text files with regex. It is the simplest kind of media to edit.
- * This serves as an example of how to extend the AbstractMedia Factory.
+ * This serves as an example of how to write a blob.
+ * @api
  */
 class TextBlob extends AbstractBlob {
+/**
+     * Short description of attribute $blobType
+     *
+     * @access public
+     * @var string
+     */
+    public static $blobType = 'text';
+
+    /**
+     * {@inheritdoc}
+     *
+     * @param  $string
+     * @return void
+	 * @api
+     */
+    public function setContents($string) {
+		$this->contents = $string;
+    }
+
+	/**
+	 * {@inheritdoc}
+	 *
+	 * @return string
+	 * @api
+	 */
+	public function __toString() {
+		return $this->contents;
+	}
 
 }
