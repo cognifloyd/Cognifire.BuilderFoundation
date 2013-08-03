@@ -1,5 +1,5 @@
-Introduction
-------------
+API Description
+===============
 
 All of these examples are looking at each user story from within the code. This is what the API could
 look/feel like. I'm trying to make this Flow as much as possible. I assume that once there is a UI,
