@@ -22,6 +22,8 @@ use TYPO3\Flow\Package\PackageManager;
  *
  * Some of the methods of this class should be exposed as FlowQuery operations to
  * modify which files are being worked with.
+ *
+ * This could probably be treated like a singleton factory...
  */
 class BlobQuery {
 
@@ -66,8 +68,8 @@ class BlobQuery {
 	 */
 	public function copy() {
 		foreach ($this->files as $file) {
-			$boilerplateFile = $this->packageManager->getPackage($this->boilerplateKey)->getPackagePath() . '/' . $file;
-			$derivativeFile = $this->packageManager->getPackage($$this->derivativeKey)->getPackagePath()  . '/' . $file;
+			$boilerplateFile = $this->getBoilerplatePath($this->boilerplateKey) . '/' . $file;
+			$derivativeFile = $this->getDerivativePath($$this->derivativeKey) . '/' . $file;
 			copy($boilerplateFile,$derivativeFile);
 		}
 
@@ -102,6 +104,40 @@ class BlobQuery {
 	protected function build() {
 		//return new FlowQuery(array());
 		return $this;
+	}
+
+	/**
+	 *
+	 * @param $boilerplateKey
+	 * @throws Exception
+	 * @return string
+	 */
+	protected function getBoilerplatePath($boilerplateKey) {
+		if(!$this->packageManager->isPackageAvailable($boilerplateKey)) {
+			throw new Exception('The boilerplate,' . $boilerplateKey . ', is not available.', 1375824175);
+		}
+		return $this->getPackagePath($boilerplateKey);
+	}
+
+	/**
+	 *
+	 * @param $derivativeKey
+	 * @return string
+	 */
+	protected function getDerivativePath($derivativeKey) {
+		if(!$this->packageManager->isPackageAvailable($derivativeKey)) {
+			$this->packageManager->createPackage($derivativeKey);
+		}
+		return $this->getPackagePath($derivativeKey);
+	}
+
+	/**
+	 *
+	 * @param $packageKey
+	 * @return string
+	 */
+	protected function getPackagePath($packageKey) {
+		return $this->packageManager->getPackage($packageKey)->getPackagePath();
 	}
 
 }
