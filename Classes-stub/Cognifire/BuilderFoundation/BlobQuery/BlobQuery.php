@@ -34,23 +34,35 @@ use TYPO3\Flow\Annotations as Flow;
 class BlobQuery {
 
 	/**
+	 * The stack of filters. Example filters:
+	 * - package filters: Vendor.Package
+	 * - filetype/mimetype: text/html; text/x-typo3-fluid-html;
+	 * - file glob/path pattern within each package
+	 *
+	 * @var array
+	 */
+	protected $filters = array();
+	/**
 	 * serves the purpose of $context in FlowQuery, and is passed to FlowQuery
 	 * the initial set is created.
 	 *
 	 * @var array
 	 */
-	protected $blobs = array();
+	//protected $blobs = array();
 
 	/**
+	 * @param $blobFilter
 	 *
-	 *
-	 * @param  string $blobSelector
-	 * @return mixed
+	 * @throws Exception
 	 */
-	public function __construct($blobSelector) {
-		$path = $this->getPathFromSelector($blobSelector);
-		$blobObjects = $this->scanForBlobs($path);
-		$this->flowQuery = new \TYPO3\Eel\FlowQuery\FlowQuery($blobObjects);
+	public function __construct($blobFilter) {
+		if(!is_string($blobFilter)) {
+			throw new Exception('BlobQuery requires a string, but '. gettype($blobFilter) . ' was received.', 1375743984);
+		}
+		$this->filters[] = $blobFilter;
+		//$path = $this->getPathFromSelector($blobSelector);
+		//$blobObjects = $this->scanForBlobs($path);
+		//$this->flowQuery = new \TYPO3\Eel\FlowQuery\FlowQuery($blobObjects);
 	}
 
 	/**
@@ -59,9 +71,9 @@ class BlobQuery {
 	 * @param  string $path
 	 * @return mixed
 	 */
-	protected function scanForBlobs($path) {
+	/*protected function scanForBlobs($path) {
 
-	}
+	}*/
 
 	/**
 	 *
@@ -69,9 +81,9 @@ class BlobQuery {
 	 * @param  string $blobSelector
 	 * @return mixed
 	 */
-	protected function getPathFromSelector($blobSelector) {
+	/*protected function getPathFromSelector($blobSelector) {
 
-	}
+	}*/
 
 	/**
 	 *
@@ -80,10 +92,10 @@ class BlobQuery {
 	 * @param  array $arguments
 	 * @return \TYPO3\Eel\FlowQuery\_FlowQuery
 	 */
-	public function __call($method, $arguments) {
+	/*public function __call($method, $arguments) {
 		$return = null;
 		$this->flowQuery->$method($arguments);
 		return $return;
-	}
+	}*/
 
 }
