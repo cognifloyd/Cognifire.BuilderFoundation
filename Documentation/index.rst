@@ -18,7 +18,7 @@ The source template was probably made by a designer.
 
 .. code:: php
 
-    $derivative = new BlobQuery( 'Cognifire.SweetSitePackage' );
+    $derivative = new Derivative( 'Cognifire.SweetSitePackage' );
 
     $derivative->branch()->find('title')->replaceWithFluidViewHelper('base');
     $fluidTemplate = $derivative->branch()->selectBlob($sourceTemplateFilename);
@@ -58,13 +58,13 @@ One of the operations that should be carried out by `integrateBoilerplate()` is 
 
 .. code:: php
 
-    $derivative = new BlobQuery( 'Cognifire.SweetSitePackage' );
+    $derivative = new Derivative( 'Cognifire.SweetSitePackage' );
     
     $derivative->integrateBoilerplate( 'Cognifire.EmptyBoilerplate', 'emptyLayoutPreset' );
 
 .. code:: php
 
-    public class BlobQuery {
+    public class Derivative {
     
         public function integrateBoilerplate( $packageKey, $presetName = '',$options = array() ) {
         
@@ -94,7 +94,7 @@ like a menu or a hero unit
 
 .. code:: php
 
-    $derivative = new BlobQuery('Cognifire.SweetSitePackage');
+    $derivative = new Derivative('Cognifire.SweetSitePackage');
 
     $derivative->branch()->cloneFromBoilerplate('Cognifire.EmptyBoilerplate:resources/templates/menu/vertical.html')
 	       ->replacePreg( 'stupid text', 'better text' );
@@ -148,7 +148,7 @@ Create a fluid template for my new action controller
 .. code:: php
 
     //instead of just kickstarting it, clone a template from a boilerplate, and insert the default action controller stuff
-    $template = new BlobQuery( 'Cognifire.SweetSitePackage' )->selectTemplateForController('coolController');
+    $template = new ( 'Cognifire.SweetSitePackage' )->selectTemplateForController('coolController');
     
     $template->find('#content')->cloneFromBoilerplate('PackageBuilder:resources/templates/actionController.html:#content');
 
@@ -172,7 +172,7 @@ mock up new templates quickly using a set of pre-made template widgets
 .. code:: php
 
     //temporary template
-    $temp = new BlobQuery(,,array('withTemporaryFiles'=>'true'));//or do it in a derivative...
+    $temp = new Derivative(,,array('withTemporaryFiles'=>'true'));//or do it in a derivative...
     
     //maybe I don't need to say "clone" but just say "from"... that makes it feel more fluent
     $temp->fromBoilerplate('Zurb.Foundation','Grid')
@@ -201,7 +201,7 @@ from the boilerplate into each site package.
     //no idea if a special boilerplate kickstarter is needed.
     someClassSomewhere->kickstartBoilerplate('Agency.AwesomeSauceBoilerplate');
     
-    $boilerplate = new BlobQuery( 'Agency.AwesomeSauceBoilerplate' );
+    $boilerplate = new Derivative( 'Agency.AwesomeSauceBoilerplate' );
     $boilerplate->???;
     
 .. note::
