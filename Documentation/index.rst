@@ -7,6 +7,10 @@ the UI will send some kind of payload to the backend that runs each of these... 
 resource-centric web-api might look for this yet. Again: I'm trying to get everything working from
 within PHP first.
 
+The basic process is: (1) Get stuff from a boilerplate (2) Copy it to a Derivative (3) Modify it in the derivative.
+This is always a one-way process boilerplate to derivative. YOu can think of a boilerplate as the source, and the
+derivative as the destination.
+
 As an integrator I want to
 --------------------------
 
@@ -18,7 +22,12 @@ The source template was probably made by a designer.
 
 .. code:: php
 
-    $derivative = new Derivative( 'Cognifire.SweetSitePackage' );
+    $bq = new BlobQuery( 'Cognifire.SweetSitePackage' );//BlobQuery always focuses on the derivative
+    
+    //The boilerplate. Since the designer's templates are stored in the SitePackage,
+    //the sitepackage is both the derivative and the boilerplate. Specify the boilerplate here:
+    $bq->from('Cognifire.SweetSitePackage') //This may need to support @ temp folders to allow uploading templates.
+       ->in('Resources/Private/SourceTemplate');
 
     $derivative->branch()->find('title')->replaceWithFluidViewHelper('base');
     $fluidTemplate = $derivative->branch()->selectBlob($sourceTemplateFilename);
